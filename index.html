@@ -1,331 +1,436 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
-    <title>Night King Host - PS3/PS4/PS5 Exploit</title>
-    <style>
-        body {
-            background: url("1.jpg");
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-color: rgb(0, 0, 0);
-            font-family: sans-serif;
-        }
-        .titleDiv {
-            color: rgb(255, 255, 255);
-            font-size: 28px;
-            font-weight: bold;
-            text-align: center;
-            border-radius: 100px;
-            box-shadow: 0px 0px 10px;
-            padding: 10px;
-            background-color: rgb(0, 0, 0);
-            animation: glow 20s infinite;
-        }
-        @keyframes glow {
-            0% {
-                border-color: rgb(255, 0, 0);
-                box-shadow: 0px 0px 10px rgb(255, 0, 0);
-            }
-            50% {
-                border-color: rgb(255, 0, 100);
-                box-shadow: 0px 0px 10px rgb(255, 0, 100);
-            }
-            100% {
-                border-color: rgb(255, 0, 0);
-                box-shadow: 0px 0px 10px rgb(255, 0, 0);
-            }
-        }
-        #date {
-            float: left;
-        }
-        .title {
-            text-align: center;
-        }
-        #clock {
-            float: right;
-        }
-        .div0 {
-            text-align: center;
-            color: rgb(255, 255, 0);
-        }
-        .btnRe {
-            background-color: rgb(255, 255, 255);
-            color: rgb(80, 80, 150);
-            font-size: 16px;
-            font-weight: bold;
-            border: none;
-            border-radius: 100px;
-            padding: 5px;
-            cursor: pointer;
-            transition-duration: 400ms;
-            float: left;
-        }
-        .btnRe:hover {
-            box-shadow: 0px 0px 10px rgb(255, 255, 255);
-        }
-        .PSNbuyNOW {
-            float: right;
-            text-decoration: none;
-            color: rgb(255, 0, 0);
-            font-weight: bold;
-            font-size: 18px;
-        }
-        .PSNbuyNOW:hover {
-            text-decoration: underline;
-        }
-        .URLDiv {
-            left: 0%;
-            top: 16%;
-            width: 30%;
-            position: absolute;
-            background-color: rgba(255, 255, 255, 0.1);
-            overflow: auto;
-            padding: 20px;
-            animation: URLDivslide 1s;
-        }
-        @keyframes URLDivslide {
-            from {
-                left: -100%;
-            }
-            to {
-                left: 0%;
-            }
-        }
-        #urltxt {
-            width: 80%;
-            outline: none;
-            padding: 5px;
-            font-weight: bold;
-            font-size: 16px;
-            border-radius: 5px;
-            border: none;
-        }
-        #statusBar {
-            font-size: 20px;
-            font-family: comic sans ms;
-        }
-        .littleT {
-            font-size: 20px;
-        }
-        .btn {
-            background-color: rgb(255, 255, 255);
-            color: rgb(80, 80, 150);
-            font-size: 18px;
-            font-weight: bold;
-            border: solid 1px rgb(255, 255, 255);
-            border-radius: 5px;
-            padding: 7px;
-            cursor: pointer;
-            transition-duration: 400ms;
-        }
-        .btn:hover {
-            box-shadow: 0px 0px 20px rgb(255, 255, 255);
-            border-radius: 100px;
-        }
-        .btnGo {
-            padding: 5px;
-            background-color: rgb(255, 255, 255);
-            color: rgb(30, 30, 50);
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .btnGo:hover {
-            box-shadow: 0px 0px 5px rgb(255, 255, 255);
-        }
-        .bottom {
-            bottom: 1%;
-            position: fixed;
-            width: 98%;
-            background-color: rgb(0, 0, 0);
-            color: rgb(255, 255, 255);
-            font-style: italic;
-            padding: 10px;
-            border: solid 1px rgb(255, 0, 0);
-            border-radius: 5px;
-            overflow: auto;
-            text-align: center;
-        }
-        .SALT {
-            color: rgb(255, 0, 0);
-            text-decoration: none;
-        }
-        .SALT:hover {
-            text-decoration: underline;
-        }
-        .works {
-            font-size: 11px;
-        }
-        ::-webkit-scrollbar {
-            display: none;
-        }
-    </style>
-    <script>
-        function load() {
-            showdate();
-        }
-        function showdate() {
-            var dt = new Date();
-            Hour = dt.getHours();
-            Minute = dt.getMinutes();
-            Day = dt.getDate();
-            Month = dt.getMonth()+1;
-            Year = dt.getFullYear();
-            if (Minute < 10){
-                Minute = "0" + Minute
-            }
-            if (Hour < 10){
-                Hour = "0" + Hour
-            }
-            document.getElementById("date").innerHTML = (Day+"/"+Month+"/"+Year);
-            document.getElementById("clock").innerHTML = (Hour+":"+Minute);
-            setInterval(showdate,30000);
-        }
-        function go() {
-            var url = document.getElementById("urltxt").value;
-            if (url == "") {
-                alert("URL can't be leave blank!")
-            }else if (url == "http://") {
-                alert("Enter Full Link!")
-            }else if (url == "https://") {
-                alert("Enter Full Link!")
-            }else {
-                window.open(url, "_self")
-            }
-        }
-        function showURLDiv() {
-            var chk = document.getElementById("urlReID").style;
-            if(chk.display == "none") {
-                chk.display = ""
-            }else {
-                chk.display = "none"
-            }
-        }
-        function Common() {
-            document.getElementById("statusBar").innerHTML = "∆❍X❑"
-        }
-        function ps3() {
-            document.getElementById("statusBar").innerHTML = "PS3Xploit (Unofficial) Codded by bishalqx980"
-        }
-        function ps4176() {
-            document.getElementById("statusBar").innerHTML = "PS4 WebKit Playground For 1.76 Firmware"
-        }
-        function ps4505() {
-            document.getElementById("statusBar").innerHTML = "PS4 Firmware 5.05 Exploit"
-        }
-        function ps4672() {
-            document.getElementById("statusBar").innerHTML = "PS4 Firmware 6.72 Exploit New JB [13-01-2022]"
-        }
-        function ps470x() {
-            document.getElementById("statusBar").innerHTML = "PS4 Firmware 7.0x Exploit"
-        }
-        function ps4900N() {
-            document.getElementById("statusBar").innerHTML = "PS4 Firmware 9.00 Auto New Exploit [Menu]"
-        }
-        function ps4900M() {
-            document.getElementById("statusBar").innerHTML = "PS4 Firmware 9.00 Exploit With Other Payloads [Menu]"
-        }
-		function ps4900psfree() {
-            document.getElementById("statusBar").innerHTML = "PS4 Firmware 9.00 Auto Exploit with New psfree webkit exploit by SGK [Menu]"
-        }
-		function ps41100() {
-            document.getElementById("statusBar").innerHTML = "PS4 Firmware 11.00 Host [Menu] - Cache the host, then activate the Bin loader Server in Goldhen settings and then run Payloads"
-        }
-        function ps4900() {
-            document.getElementById("statusBar").innerHTML = "PS4 9.00 Auto Exploit + GoldHen ( no need use usb drive )"
-        }
-        function ps5() {
-            document.getElementById("statusBar").innerHTML = "PS5 Jailbreak Firmares 3.xx - 4.xx V1.04 ( Offline Cache )"
-		}
-        function ps5403Hen() {
-            document.getElementById("statusBar").innerHTML = "PS5 Exploit & Homebrew Enabler For 4.03 Firmware"
-		}
-        function ps5403() {
-            document.getElementById("statusBar").innerHTML = "PS5 Exploit for Dump Games on 4.03 Firmware"	
-        }
-        function PSNactive() {
-            document.getElementById("statusBar").innerHTML = "Offline PSN Activator for 6.72, 7.xx, 9.00"
-		}
-        function PS52XX() {
-            document.getElementById("statusBar").innerHTML = "PS5 UMTX Jailbreak for 2.XX Firmwares"
-		}
-        function NewWebkit() {
-            document.getElementById("statusBar").innerHTML = "Test New Webkit Bug for PS4 & PS5 - PS5 Maximum 9.00 FW ps5 & PS4 Maximum 11.52 FW!"
-        }
-        function esp() {
-            document.getElementById("statusBar").innerHTML = "ESP (8266 - 32s2 - s3 - s3 & c3) Updater by SALT [Use Google Chrome]"
-        }
-        function ps4Trainer() {
-            document.getElementById("statusBar").innerHTML = "PS4 Trainer Offline Cache in PS4 Browser by TylerMods"
-        }
-        function binloader() {
-            document.getElementById("statusBar").innerHTML = "PS4 Binloader Collection for Firmware - 5.05, 6.72, 7.02 & 7.55"
-        }
-        function PS4NoBD() {
-            document.getElementById("statusBar").innerHTML = "PS4 No Blu Ray Drive for 6.20, 6.7x, 7.0x, 7.5x (Required to Update System Firmware)"
-        }
-        function TGChannel() {
-            document.getElementById("statusBar").innerHTML = "NightKingHost Official Jailbreak PS4/PS5 Telegram Channel [News, Fpkg, Tools, Tutorial's, Theme's Many More Stuff] Join NOW!!"
-        }
-        function PSNBuy() {
-            document.getElementById("statusBar").innerHTML = "For Those Friend's are On PS4 Latest Firmware & Looking for Cheap Games - PSN, Xbox, Nintendo Account and Gift Card Sell @ Low Price "
-        }
-        function aboutSALT() {
-            document.getElementById("statusBar").innerHTML = "I don't Know 😉 Check Out yourSelf..."
-        }
-    </script>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+  <title>Night King Host - PS3/PS4/PS5 Exploit</title>
+  <!-- Coded with ❣️ by https://bishalqx980.github.io/bishalqx980 -->
+  <style>
+    :root{
+      --bg-overlay: rgba(0,0,0,0.6);
+      --accent: #ff0;
+      --accent-strong: #ff0040;
+      --muted: #bfbfbf;
+      --glass: rgba(255,255,255,0.06);
+      --radius-lg: 18px;
+      --radius-pill: 999px;
+      --max-width: 1100px;
+    }
+
+    /* Basic reset */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color:#fff;
+      background-image: url("bgimg.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      /* fallback */
+      background-color:#000;
+      line-height:1.4;
+    }
+
+    /* Page container centers content and provides a subtle overlay for readability */
+    .page {
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      padding:20px;
+      gap:18px;
+      background: linear-gradient(180deg, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.45) 70%);
+    }
+
+    .topbar {
+      width:100%;
+      max-width:var(--max-width);
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+      padding:12px 16px;
+      border-radius:var(--radius-lg);
+      background: linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.25));
+      box-shadow: 0 6px 30px rgba(0,0,0,0.6);
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+
+    /* Title + date/time */
+    .title-wrap {
+      display:flex;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .title {
+      font-weight:700;
+      font-size:1.25rem;
+      letter-spacing:0.2px;
+      display:inline-block;
+    }
+
+    .date-clock {
+      display:flex;
+      gap:10px;
+      align-items:center;
+      color:var(--muted);
+      font-weight:600;
+      font-size:0.95rem;
+    }
+
+    /* Neon/glow effect for the title container */
+    .title-pill{
+      padding:8px 16px;
+      border-radius:var(--radius-pill);
+      background: rgba(0,0,0,0.45);
+      border: 1px solid rgba(255,0,0,0.08);
+      box-shadow: 0 0 18px rgba(255,0,0,0.06), inset 0 -6px 20px rgba(255,0,0,0.02);
+      animation: slowGlow 16s linear infinite;
+    }
+
+    @keyframes slowGlow{
+      0%{ box-shadow: 0 0 8px rgba(255,0,0,0.05)}
+      50%{ box-shadow: 0 0 18px rgba(255,0,100,0.12)}
+      100%{ box-shadow: 0 0 8px rgba(255,0,0,0.05)}
+    }
+
+    /* Main content container */
+    .card {
+      width:100%;
+      max-width:var(--max-width);
+      background: linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.4));
+      border-radius: var(--radius-lg);
+      padding:18px;
+      border: 1px solid rgba(255,255,255,0.04);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+
+    .subtitle {
+      color:var(--accent);
+      font-weight:700;
+      font-size:1rem;
+    }
+
+    .controls {
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    /* Link-as-button style (accessible) */
+    .btn {
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      justify-content:center;
+      padding:10px 14px;
+      border-radius:10px;
+      background:var(--glass);
+      color:#fff;
+      text-decoration:none;
+      font-weight:700;
+      border:1px solid rgba(255,255,255,0.06);
+      cursor:pointer;
+      transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+      user-select:none;
+    }
+    .btn[data-accent]{
+      background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      color: #ff0;
+      border-color: rgba(255,255,0,0.08);
+    }
+    .btn:active{ transform: translateY(1px) }
+    .btn:hover{ box-shadow: 0 6px 20px rgba(0,0,0,0.6) }
+
+    /* Primary action (GO) */
+    .btn--primary {
+      background:linear-gradient(90deg, rgba(255,255,255,0.95), rgba(240,240,240,0.92));
+      color:#111;
+      font-weight:800;
+      border-radius:8px;
+      padding:10px 14px;
+    }
+
+    /* URL redirector panel - responsive */
+    .url-panel {
+      display:flex;
+      gap:8px;
+      align-items:center;
+      justify-content:flex-start;
+      background: rgba(255,255,255,0.03);
+      padding:10px;
+      border-radius:8px;
+      border:1px solid rgba(255,255,255,0.03);
+      max-width:600px;
+      width:100%;
+      transform-origin:left;
+    }
+    .url-panel input{
+      flex:1;
+      min-width:0;
+      padding:9px 10px;
+      border-radius:6px;
+      border:none;
+      outline:none;
+      font-weight:700;
+      background: rgba(255,255,255,0.02);
+      color:#fff;
+    }
+    .url-panel input::placeholder{ color:rgba(255,255,255,0.45) }
+
+    /* Status area (dynamic text that changes on hover) */
+    .status {
+      font-family: "Segoe UI", Roboto, system-ui, -apple-system, "Helvetica Neue", Arial;
+      color:var(--muted);
+      font-size:0.95rem;
+      padding:8px 10px;
+      border-radius:8px;
+      background: rgba(255,255,255,0.02);
+    }
+
+    /* grid of feature buttons (links) */
+    .grid {
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:10px;
+    }
+    .grid a { text-align:center; padding:10px 8px; display:block }
+
+    /* little helper text */
+    .muted {
+      color:var(--muted);
+      font-size:0.92rem;
+    }
+
+    /* footer/bottom strip */
+    .bottom {
+      width:100%;
+      max-width:var(--max-width);
+      padding:12px 14px;
+      border-radius:10px;
+      background: rgba(0,0,0,0.5);
+      border:1px solid rgba(255,0,0,0.06);
+      color:#ddd;
+      font-size:0.95rem;
+      text-align:center;
+    }
+
+    a.salt-link { color:var(--accent-strong); font-weight:700; text-decoration:none }
+    a.salt-link:hover { text-decoration:underline }
+
+    /* small screens adjustments */
+    @media (max-width:900px){
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      .title { font-size:1rem }
+    }
+    @media (max-width:520px){
+      .topbar{ flex-direction:column; align-items:stretch; gap:6px }
+      .grid { grid-template-columns: 1fr; }
+      .url-panel{ flex-direction:column; align-items:stretch }
+      .url-panel input{ width:100% }
+    }
+
+    /* respect reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .title-pill, .btn, .card { animation: none; transition: none }
+    }
+  </style>
 </head>
-<body onload="load()">
-    <div class="titleDiv">
-        <span id="date"></span>
-        <span class="title">Night King Host - PS3/PS4/PS5 Exploit</span>
-        <span id="clock"></span>
-    </div>
-    <div class="div0"><br>
-        <button class="btnRe" onclick="showURLDiv()">URL Redirector</button><a href="https://salt-12.github.io/main/psn_games.html"><span class="PSNbuyNOW">Is Your PS4/5 on the Latest Firmware?!</span></a><br>
-        <h2>Night King Host - Main Menu</h2>
-        <div class="URLDiv" id="urlReID" style="display: none;">
-            <input type="text" name="" id="urltxt" placeholder="http://example.com"> <button onclick="go()" class="btnGo">GO</button>
+<body>
+  <div class="page" id="page">
+    <header class="topbar" role="banner" aria-label="Night King Host header">
+      <div class="title-wrap">
+        <div class="title-pill" aria-hidden="true">
+          <span class="title">Night King Host</span>
         </div>
-        <p id="statusBar">∆❍X❑</p>
-        <p class="littleT">PS3Xploit / 1.76 - 5.05 - 6.72 - 7.02 - 7.5X - 9.00 - 11.00 Firmware Host Exploit Menu For PS4 / PS5 3.xx & 4.XX Firmware Debug Settings - 4.03 Game Dumper</p>
-        <a href="https://salt-12.github.io/ps3/index.html"><button class="btn" onmouseover="ps3()" onmouseout="Common()">PS3Xploit</button></a>
-		<a href="https://salt-12.github.io/176/index.html"><button class="btn" onmouseover="ps4176()" onmouseout="Common()">PS4 Playground 1.76</button></a>
-        <a href="https://salt-12.github.io/505/index.html"><button class="btn" onmouseover="ps4505()" onmouseout="Common()">PS4 FW-5.05</button></a>
-        <a href="https://salt-12.github.io/672new/index.html"><button class="btn" onmouseover="ps4672()" onmouseout="Common()">PS4 FW-6.72</button></a>
-        <a href="https://salt-12.github.io/70x/index.html"><button class="btn" onmouseover="ps470x()" onmouseout="Common()">PS4 FW-7.0x</button></a>
-        <a href="https://salt-12.github.io/900an/index.html"><button class="btn" onmouseover="ps4900N()" onmouseout="Common()">PS4 FW-9.00 New</button></a>
-		<a href="https://salt-12.github.io/900a/index.html"><button class="btn" onmouseover="ps4900M()" onmouseout="Common()">PS4 FW-9.00 Menu</button></a>
-		<a href="https://salt-12.github.io/900psfree/index.html"><button class="btn" onmouseover="ps4900psfree()" onmouseout="Common()">PS4 FW-9.00 Auto psfree</button></a>
-		<a href="https://salt-12.github.io/11/index.html"><button class="btn" onmouseover="ps41100()" onmouseout="Common()">PS4 FW-11.00 </button></a>
-		
-        <br><br>
-		<a href="https://salt-12.github.io/900/index.html"><button class="btn" onmouseover="ps4900()" onmouseout="Common()">PS4 9.00 Auto Exploit + GoldHen ( Without Usb drive )</button></a>
-		<a href="https://salt-12.github.io/ps5_jb/index.html"><button class="btn" onmouseover="ps5()" onmouseout="Common()">PS5 3.xx - 4.xx FW</button></a>
-		<a href="https://salt-12.github.io/ps5_403hen/index.html"><button class="btn" onmouseover="ps5403Hen()" onmouseout="Common()">PS5 4.03 FW Hen</button></a>
-		<a href="https://salt-12.github.io/ps5_403/index.html"><button class="btn" onmouseover="ps5403()" onmouseout="Common()">PS5 4.03 FW Games Dumper</button></a><br><br>
-        <a href="https://salt-12.github.io/Web-Activator/index.html"><button class="btn" onmouseover="PSNactive()" onmouseout="Common()">Web-Activator (PSN)</button></a>
-		<a href="https://salt-12.github.io/ps5_2xx/index.html"><button class="btn" onmouseover="PS52XX()" onmouseout="Common()">PS5 2.XX JB</button></a>
-		<a href="https://salt-12.github.io/wm/index.html"><button class="btn" onmouseover="NewWebkit()" onmouseout="Common()">New Webkit Test for PS4/5</button></a>
-        <p class="littleT">PS4 ESP Board Updater / PS4 Offline Trainer / Binloader For 5.05 - 6.72 - 7.02 & 7.55 Firmware / PS4 No Blueray Drive</p>
-        <a href="https://salt-12.github.io/esp/index.html"><button class="btn" onmouseover="esp()" onmouseout="Common()">ESP-Updater</button></a>
-        <a href="https://salt-12.github.io/trainer/index.html"><button class="btn" onmouseover="ps4Trainer()" onmouseout="Common()">Offline PS4Trainer</button></a>
-		<a href="https://salt-12.github.io/binloader/index.html"><button class="btn" onmouseover="binloader()" onmouseout="Common()">Binloader Collection</button></a>
-	    <a href="https://salt-12.github.io/nobd/index.html"><button class="btn" onmouseover="PS4NoBD()" onmouseout="Common()">PS4 No-BD</button></a>
-        <p class="littleT">Download PS2 And CLASSIC Fpkg Games / NIGHT KING Telegram Channel / PSN, Xbox, Nintendo Gift Card & Account's... / About Me</p>
-        <a href="https://t.me/JAILBROKEN_PS4_PS5_UNIVERSAL"><button class="btn" onmouseover="TGChannel()" onmouseout="Common()">PS4 JAILBREAK 11.00 FW RELEASED! - Join To our Telegram Channel</button></a><br><br>
-        <a href="https://t.me/+L1OF8NKPM2VjYjI0"><button class="btn" onmouseover="PSNBuy()" onmouseout="Common()">PSN, Xbox, Nintendo Account's & Gift Card's @ Cheap Price!</button></a>&nbsp;
-        <a href="https://salt-12.github.io/salt/index.html"><button class="btn" onmouseover="aboutSALT()" onmouseout="Common()">About ME</button></a>
-	</div>
-    <div class="bottom">
-        <span><span style="color: rgb(255, 255, 0);">NightKingHost Owner: </span> SALT - Find Me On Telegram if you have any kind of issues! <a href="https://t.me/Salt753194" class="SALT">@Salt753194</a> And Twitter : <a href="http://twitter.com/salt13939424" class="SALT">@salt13939424</a></span><br><br>
-        <span><span style="color: rgb(255, 255, 0);">Credit's: </span>Many Many Thanks To All Contributor's In this PS-JB Scene... & Super Special Thanks To @TylerMods <span class="works">(Trainer)</span>, SGK <span class="works">(ESP)</span>, bishalqx980 <span class="works">(PS3/PS4Exploit,Web-Design,URL_Redirector)</span> and Many More...</span>
-    </div>
+
+        <div class="date-clock" aria-live="polite" aria-atomic="true">
+          <span id="date" title="Current date"></span>
+          <span id="clock" title="Current time"></span>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;align-items:center;">
+        <button id="toggle-url" class="btn" aria-expanded="false" aria-controls="url-panel">URL Redirector</button>
+        <a class="btn" href="https://salt-12.github.io/main/psn_games.html" role="link">Is your PS4/5 on latest firmware?</a>
+      </div>
+    </header>
+
+    <main class="card" role="main" aria-labelledby="main-title">
+      <h2 id="main-title" style="margin:0;color:var(--accent)">Night King Host — Main Menu</h2>
+
+      <!-- URL redirector panel -->
+      <div id="url-panel" class="url-panel" hidden>
+        <label for="url-input" class="visually-hidden">Enter URL</label>
+        <input id="url-input" type="url" placeholder="https://example.com" inputmode="url" aria-label="Enter URL to open" />
+        <button id="url-go" class="btn btn--primary" aria-label="Open URL">GO</button>
+      </div>
+
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between">
+        <div class="controls">
+          <p class="subtitle">Exploit Menu</p>
+          <div class="muted">PS3Xploit / PS4 & PS5 hosts for multiple firmware</div>
+        </div>
+
+        <div id="status" class="status" aria-live="polite">∆❍X❑</div>
+      </div>
+
+      <!-- Grid of links (converted to semantic anchors styled as buttons) -->
+      <nav class="grid" aria-label="Exploit menu links">
+        <!-- Add data-status for on-hover text; JS will use pointerenter/leave to update status -->
+        <a class="btn" href="https://salt-12.github.io/ps3/index.html" data-status="PS3Xploit (Unofficial) Codded by bishalqx980">PS3Xploit</a>
+        <a class="btn" href="https://salt-12.github.io/176/index.html" data-status="PS4 WebKit Playground For 1.76 Firmware">PS4 Playground 1.76</a>
+        <a class="btn" href="https://salt-12.github.io/505/index.html" data-status="PS4 Firmware 5.05 Exploit">PS4 FW-5.05</a>
+
+        <a class="btn" href="https://salt-12.github.io/672new/index.html" data-status="PS4 Firmware 6.72 Exploit">PS4 FW-6.72</a>
+        <a class="btn" href="https://salt-12.github.io/70x/index.html" data-status="PS4 Firmware 7.0x Exploit">PS4 FW-7.0x</a>
+        <a class="btn" href="https://salt-12.github.io/900an/index.html" data-status="PS4 Firmware 9.00 Auto New Exploit">PS4 FW-9.00 New</a>
+
+        <a class="btn" href="https://salt-12.github.io/900a/index.html" data-status="PS4 Firmware 9.00 Menu">PS4 FW-9.00 Menu</a>
+        <a class="btn" href="https://salt-12.github.io/900psfree/index.html" data-status="PS4 FW-9.00 Auto psfree">PS4 FW-9.00 Auto psfree</a>
+        <a class="btn" href="https://salt-12.github.io/11/index.html" data-status="PS4 FW-11.00 Host">PS4 FW-11.00</a>
+
+        <a class="btn" href="https://salt-12.github.io/900/index.html" data-status="PS4 9.00 Auto Exploit + GoldHen (Without USB drive)">PS4 9.00 Auto + GoldHen</a>
+        <a class="btn" href="https://salt-12.github.io/ps5_jb/index.html" data-status="PS5 Jailbreak Firmwares 3.xx - 4.xx">PS5 3.xx - 4.xx</a>
+        <a class="btn" href="https://salt-12.github.io/ps5_403hen/index.html" data-status="PS5 Exploit & Homebrew Enabler For 4.03">PS5 4.03 Hen</a>
+
+        <a class="btn" href="https://salt-12.github.io/ps5_403/index.html" data-status="PS5 Exploit for Dump Games on 4.03">PS5 4.03 Games</a>
+        <a class="btn" href="https://salt-12.github.io/Web-Activator/index.html" data-status="Offline PSN Activator for various firmwares">Web-Activator (PSN)</a>
+        <a class="btn" href="https://salt-12.github.io/ps5_2xx/index.html" data-status="PS5 UMTX Jailbreak for 2.XX">PS5 2.XX JB</a>
+
+        <a class="btn" href="https://salt-12.github.io/wm/index.html" data-status="Test New Webkit Bug for PS4 & PS5">New Webkit Test</a>
+        <a class="btn" href="https://salt-12.github.io/esp/index.html" data-status="ESP Updater by SALT">ESP-Updater</a>
+        <a class="btn" href="https://salt-12.github.io/trainer/index.html" data-status="PS4 Offline Trainer">Offline PS4Trainer</a>
+
+        <a class="btn" href="https://salt-12.github.io/binloader/index.html" data-status="Binloader Collection">Binloader Collection</a>
+        <a class="btn" href="https://salt-12.github.io/nobd/index.html" data-status="PS4 No Blu Ray Drive">PS4 No-BD</a>
+        <a class="btn" style="border-color: rgb(0, 150, 255);background-color: rgb(0, 150, 255, 0.25);" href="https://t.me/JAILBROKEN_PS4_PS5_UNIVERSAL" data-status="NightKingHost Telegram Channel">Telegram Channel</a>
+      </nav>
+
+      <p class="muted" style="margin:0">Download PS2 and classic Fpkg games · NightKing telegram channel · PSN/Xbox/Nintendo accounts & gift cards · About</p>
+    </main>
+
+    <footer class="bottom" role="contentinfo">
+      <div><strong style="color:var(--accent)">NightKingHost Owner:</strong> SALT — Find me on Telegram: <a class="salt-link" href="https://t.me/Salt753194">@Salt753194</a> · Twitter: <a class="salt-link" href="https://twitter.com/salt13939424">@salt13939424</a></div>
+      <div style="margin-top:10px"><strong style="color:var(--accent)">Credits:</strong> Many thanks to contributors — special thanks to TylerMods (Trainer), SGK (ESP), bishalqx980 (PS3/PS4Exploit, Web-Design, URL Redirector) and many more...</div>
+    </footer>
+  </div>
+
+  <script>
+    // Light, dependency-free JS for date/time, URL redirect, and hover status updates.
+    (function () {
+        const dateEl = document.getElementById('date');
+        const clockEl = document.getElementById('clock');
+        const statusEl = document.getElementById('status');
+        const urlPanel = document.getElementById('url-panel');
+        const toggleUrlBtn = document.getElementById('toggle-url');
+        const urlInput = document.getElementById('url-input');
+        const urlGo = document.getElementById('url-go');
+        console.log("Coded with ❣️ by https://bishalqx980.github.io/bishalqx980");
+
+        // Date/time updater (updates every 30s). Uses a single interval.
+        function updateDateTime() {
+            const dt = new Date();
+            const d = dt.getDate().toString().padStart(2,'0');
+            const m = (dt.getMonth() + 1).toString().padStart(2,'0');
+            const y = dt.getFullYear();
+            const hh = dt.getHours().toString().padStart(2,'0');
+            const mm = dt.getMinutes().toString().padStart(2,'0');
+            dateEl.textContent = `${d}/${m}/${y}`;
+            clockEl.textContent = `${hh}:${mm}`;
+        }
+        updateDateTime();
+        setInterval(updateDateTime, 30000);
+        // Coded with ❣️ by https://bishalqx980.github.io/bishalqx980
+
+        // URL panel toggle
+        toggleUrlBtn.addEventListener('click', () => {
+            const isHidden = urlPanel.hidden;
+            urlPanel.hidden = !isHidden;
+            toggleUrlBtn.setAttribute('aria-expanded', String(!isHidden));
+            if (!isHidden) {
+            // hide - move focus back
+            toggleUrlBtn.focus();
+            } else {
+            // show - focus input
+            setTimeout(()=> urlInput.focus(), 50);
+            }
+        });
+
+        // Open URL safely in same tab (as original). Validate basic URL.
+        urlGo.addEventListener('click', ()=> {
+            const raw = (urlInput.value || '').trim();
+            if (!raw) return alert("URL can't be blank!");
+            // Ensure protocol present (basic)
+            const hasProto = /^[a-zA-Z][\w+.-]*:\/\//.test(raw);
+            if (!hasProto) {
+            alert("Please include protocol (https:// or http://)");
+            urlInput.focus();
+            return;
+            }
+            // Basic check only; avoid XSS or javascript: links
+            if (/^javascript:/i.test(raw)) {
+            alert("Blocked invalid URL");
+            return;
+            }
+            // Open in same tab per original behavior
+            window.location.href = raw;
+        });
+
+        // Hover / focus status updates for menu items: use delegation
+        const grid = document.querySelector('.grid');
+        grid.addEventListener('pointerenter', e => {
+            const a = e.target.closest('a.btn');
+            if (!a) return;
+            const text = a.dataset.status || a.textContent.trim();
+            statusEl.textContent = text;
+        }, {capture:true});
+        grid.addEventListener('pointerleave', e => {
+            // when pointer leaves a link, restore base text
+            const a = e.target.closest('a.btn');
+            if (!a) return;
+            statusEl.textContent = '∆❍X❑';
+        }, {capture:true});
+
+        // Also update status on keyboard focus for accessibility
+        grid.addEventListener('focusin', e => {
+            const a = e.target.closest('a.btn');
+            if (!a) return;
+            statusEl.textContent = a.dataset.status || a.textContent.trim();
+        });
+        grid.addEventListener('focusout', () => statusEl.textContent = '∆❍X❑');
+
+        // Make Enter work in URL input
+        urlInput.addEventListener('keydown', (ev) => {
+            if (ev.key === 'Enter') {
+            ev.preventDefault();
+            urlGo.click();
+            }
+        });
+
+      // small helper: make links with target external open in new tab if needed
+      // (none configured here; left as a pattern)
+    })();
+  </script>
+
+  <!-- Tiny helper for screen readers -->
+  <style>
+    .visually-hidden{
+      position:absolute!important;
+      height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap;border:0;padding:0;margin:-1px;
+    }
+  </style>
 </body>
 </html>
+<!-- Coded with ❣️ by https://bishalqx980.github.io/bishalqx980 -->
